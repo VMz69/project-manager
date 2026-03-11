@@ -1,36 +1,193 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Gestión de Proyectos y Tareas
 
-## Getting Started
+## Descripción
 
-First, run the development server:
+Este proyecto es una **aplicación web desarrollada con Next.js, React y
+TypeScript** que permite gestionar usuarios, proyectos y tareas dentro
+de un sistema simple de administración.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+El sistema incluye:
+
+-   Registro e inicio de sesión de usuarios
+-   Dashboard principal
+-   Gestión de proyectos
+-   Gestión de tareas
+
+Para simplificar el desarrollo académico, el proyecto utiliza **datos
+simulados (mocks)** en lugar de una base de datos real.
+
+------------------------------------------------------------------------
+
+# Tecnologías utilizadas
+
+-   Next.js (App Router)
+-   React
+-   TypeScript
+-   LocalStorage para persistencia de sesión
+-   Datos simulados (Mocks)
+
+------------------------------------------------------------------------
+
+# Cómo ejecutar el proyecto
+
+## 1. Clonar el repositorio
+
+``` bash
+git clone https://github.com/VMz69/project-manager.git
+cd project-manager
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 2. Instalar dependencias
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+``` bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 3. Ejecutar el proyecto
 
-## Learn More
+``` bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 4. Abrir en el navegador
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+------------------------------------------------------------------------
 
-## Deploy on Vercel
+# Rutas principales del sistema
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  Ruta         Descripción
+  ------------ ----------------------
+  /login       Inicio de sesión
+  /register    Registro de usuarios
+  /dashboard   Panel principal
+  /projects    Gestión de proyectos
+  /tasks       Gestión de tareas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+------------------------------------------------------------------------
+
+# Distribución del equip
+
+El proyecto se divide por **módulos funcionales**, asignando archivos
+específicos a cada integrante.
+
+## Coordinador -- Arquitectura
+
+Responsable de la estructura base del sistema.
+
+Archivos principales:
+
+-   `types/`
+-   `mocks/`
+-   `context/AuthContext.tsx`
+-   `components/ProtectedRoute.tsx`
+
+------------------------------------------------------------------------
+
+## Autenticación
+
+Responsable del login y registro.
+
+Archivos:
+
+    app/login/page.tsx
+    app/register/page.tsx
+    services/authService.ts
+
+------------------------------------------------------------------------
+
+## Dashboard / UI
+
+Responsable de la interfaz principal y navegación.
+
+Archivos:
+
+    app/dashboard/page.tsx
+    components/Navbar.tsx
+
+------------------------------------------------------------------------
+
+## Proyectos
+
+Responsable del módulo de proyectos.
+
+Archivos:
+
+    app/projects/page.tsx
+    components/ProjectCard.tsx
+    services/projectService.ts
+
+------------------------------------------------------------------------
+
+## Tareas
+
+Responsable del módulo de tareas.
+
+Archivos:
+
+    app/tasks/page.tsx
+    components/TaskCard.tsx
+    services/taskService.ts
+
+------------------------------------------------------------------------
+
+# Estructura simplificada del proyecto
+
+    src
+    │
+    ├── app
+    │   ├── login
+    │   ├── register
+    │   ├── dashboard
+    │   ├── projects
+    │   └── tasks
+    │
+    ├── components
+    │   ├── Navbar.tsx
+    │   ├── ProjectCard.tsx
+    │   ├── TaskCard.tsx
+    │   └── ProtectedRoute.tsx
+    │
+    ├── context
+    │   └── AuthContext.tsx
+    │
+    ├── mocks
+    │   ├── users.ts
+    │   ├── projects.ts
+    │   └── tasks.ts
+    │
+    ├── services
+    │   ├── authService.ts
+    │   ├── projectService.ts
+    │   └── taskService.ts
+    │
+    └── types
+        ├── User.ts
+        ├── Project.ts
+        └── Task.ts
+
+------------------------------------------------------------------------
+
+# Flujo básico del sistema
+
+1.  Un usuario se registra o inicia sesión.
+2.  La sesión se guarda en **localStorage** mediante `AuthContext`.
+3.  Las rutas privadas se protegen con `ProtectedRoute`.
+4.  Los proyectos y tareas se almacenan en **arrays simulados (mocks)**.
+5.  Los servicios (`services/`) manejan la lógica de cada módulo.
+
+------------------------------------------------------------------------
+
+# Despliegue
+
+Enlace del proyecto desplegado:
+
+    (Pendiente)
+
+------------------------------------------------------------------------
+
+# Notas
+
+-   Este proyecto es de carácter **académico**.
+-   No utiliza base de datos real.
