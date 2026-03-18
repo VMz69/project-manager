@@ -158,7 +158,7 @@ export default function DashboardPage() {
         </div>
 
         {pendingTasks.length === 0 ? (
-          <div className="px-6 py-8 text-gray-500">No hay tareas pendientes 🎉</div>
+          <div className="px-6 py-8 text-gray-500">No hay tareas pendientes </div>
         ) : (
           <ul className="divide-y divide-gray-200">
             {pendingTasks.map(task => (
