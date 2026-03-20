@@ -6,7 +6,7 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // ✅ OCULTAR SIDEBAR EN LOGIN
+  // para que no salga la side bar en l apantalla login
   if (pathname === '/login') {
     return null;
   }
