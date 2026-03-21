@@ -30,5 +30,27 @@ export const deleteProject = (id: number) => {
   projects.splice(index, 1)
 }
 */
+import { projects } from "../mocks/projects";
+import { Project } from "../types/Project";
 
-export {}
+export const getProjects = (): Project[] => {
+  return [...projects]; 
+};
+
+export const createProject = (projectData: Omit<Project, 'id'>): Project => {
+  const newId = projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1;
+  const newProject: Project = {
+    ...projectData,
+    id: newId
+  };
+  
+  projects.push(newProject);
+  return newProject;
+};
+
+export const deleteProject = (id: number): void => {
+  const index = projects.findIndex((p) => p.id === id);
+  if (index !== -1) {
+    projects.splice(index, 1);
+  }
+};
