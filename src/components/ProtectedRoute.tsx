@@ -12,25 +12,29 @@
  * mostrar children.
  */
 
-"use client"
+"use client";
 
-import { useAuth } from "../context/AuthContext"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function ProtectedRoute({ children }: any) {
-  const { user } = useAuth()
-  const router = useRouter()
+export default function ProtectedRoute({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
+    // Si no hay usuario, redirige a login
     if (!user) {
-      router.push("/login")
+      router.push("/login");
     }
-  }, [user, router])
+  }, [user, router]);
 
-  if (!user) {
-    return <div>Cargando...</div>
-  }
+  // Evita render mientras valida
+  if (!user) return null;
 
-  return children
+  return <>{children}</>;
 }

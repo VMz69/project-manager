@@ -22,10 +22,11 @@
  * "user"    → usuario normal
  */
 
+export type Role = "manager" | "user";
 export interface User {
-  id: number
-  name: string
-  email: string
-  password: string
-  role: "manager" | "user"
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: Role;
 }

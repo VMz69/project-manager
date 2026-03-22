@@ -35,7 +35,36 @@ export const registerUser = (user: any) => {
 //////////////////////////////// FIN DE CODIGO DE PRUEBA... 
 
 
-export {}
+import { users } from "@/mocks/users";
+import { User } from "@/types/User";
+
+// Simula delay de API
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+// LOGIN
+export const login = async (email: string, password: string): Promise<User | null> => {
+  await delay(300);
+
+  const user = users.find(
+    (u) => u.email === email && u.password === password
+  );
+
+  return user || null;
+};
+
+// REGISTER
+export const register = async (newUser: Omit<User, "id">): Promise<User> => {
+  await delay(300);
+
+  const user: User = {
+    id: users.length + 1,
+    ...newUser,
+  };
+
+  users.push(user);
+
+  return user;
+};
 
 
 
