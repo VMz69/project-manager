@@ -37,7 +37,67 @@ export default function LoginPage() {
 */
 
 
-export default function LoginPage() {
-  return <div>Login Page</div>
-}
+"use client";
 
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const { login, user } = useAuth();
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // Si ya está logueado, redirige
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const success = await login(email, password);
+
+    if (!success) {
+      setError("Credenciales incorrectas");
+      return;
+    }
+
+    router.push("/dashboard");
+  };
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <form onSubmit={handleSubmit} className="p-6 border rounded w-80">
+        <h2 className="text-xl mb-4">Login</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full mb-2 p-2 border"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full mb-2 p-2 border"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+
+        <button className="w-full bg-blue-500 text-white p-2 mt-2">
+          Iniciar sesión
+        </button>
+      </form>
+    </div>
+  );
+}
