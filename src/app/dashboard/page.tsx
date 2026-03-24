@@ -8,10 +8,9 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
 
 export default function DashboardPage() {
-  const router = useRouter();
 
   // Usamos el contexto global (forma correcta)
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
 
   // Filtrar tareas pendientes
   const pending = tasks.filter((t) => t.status === "pending");
@@ -21,22 +20,9 @@ export default function DashboardPage() {
     return projects.find((p) => p.id === id)?.name ?? "Proyecto";
   };
 
-  // Logout usando contexto (NO localStorage manual)
-  const handleLogout = () => {
-    logout();
-    router.replace("/login");
-  };
-
   return (
     <ProtectedRoute>
-      <div className="space-y-8 relative">
-        {/* BOTÓN SALIR */}
-        <button
-          onClick={handleLogout}
-          className="absolute top-0 right-0 bg-white text-blue-700 px-4 py-2 rounded shadow hover:bg-blue-100 transition"
-        >
-          Salir
-        </button>
+      <div className="space-y-8 p-8">
 
         {/* HEADER */}
         <header>
