@@ -1,14 +1,14 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useSidebar } from '@/context/SidebarContext';
 
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+  const { isOpen, toggle } = useSidebar();
 
   // para que no salga la sidebar en las páginas login/register/home
   if (pathname === '/login' || pathname === '/register' || pathname === '/') {
@@ -23,8 +23,6 @@ export default function Sidebar() {
          : 'hover:bg-blue-700'
      }`;
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
-
   const handleLogout = () => {
     logout();
     router.push('/login');
@@ -32,21 +30,11 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Botón hamburguesa para móvil */}
-      <button
-        onClick={toggleSidebar}
-        className="md:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-
       {/* Overlay para móvil */}
       {isOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={toggleSidebar}
+          onClick={toggle}
         ></div>
       )}
 
@@ -58,29 +46,26 @@ export default function Sidebar() {
       >
         {/* Navegación principal */}
         <nav className="flex-1 space-y-2">
-          <button onClick={() => { router.push('/dashboard'); setIsOpen(false); }} className={btn('/dashboard')}>
+          <button onClick={() => { router.push('/dashboard'); toggle(); }} className={btn('/dashboard')}>
             Inicio
           </button>
 
-          <button onClick={() => { router.push('/projects'); setIsOpen(false); }} className={btn('/projects')}>
+          <button onClick={() => { router.push('/projects'); toggle(); }} className={btn('/projects')}>
             Proyectos
           </button>
 
-          <button onClick={() => { router.push('/tasks'); setIsOpen(false); }} className={btn('/tasks')}>
+          <button onClick={() => { router.push('/tasks'); toggle(); }} className={btn('/tasks')}>
             Tareas
           </button>
         </nav>
 
-        {/* Información de usuario + logout */}
+        {/* Información de usuario */}
         <div className="mt-4 border-t border-white/30 pt-4 md:mt-auto">
           <p className="text-sm text-white/90">Conectado como:</p>
           <p className="font-semibold truncate text-white">{user?.name ?? 'Invitado'}</p>
-          <button
-            onClick={() => { handleLogout(); setIsOpen(false); }}
-            className="mt-2 w-full bg-white text-blue-700 font-semibold py-2 rounded hover:bg-gray-100 transition"
-          >
-            Cerrar sesión
-          </button>
+          <p className="font-light truncate text-white">{user?.role ?? ''}</p>
+          <p className="font-light truncate text-white">{user?.email ?? ''}</p>
+
         </div>
       </aside>
     </>
