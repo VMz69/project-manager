@@ -61,14 +61,16 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <form onSubmit={handleSubmit} className="p-6 border rounded w-80">
-        <h2 className="text-xl mb-4">Registro</h2>
+    // Contenedor centralizado con fondo claro y altura de pantalla completa
+    <div className="flex items-center justify-center h-screen bg-white text-gray-900">
+      <form onSubmit={handleSubmit} className="p-6 border border-gray-200 rounded-lg shadow-sm w-80 bg-white">
+        {/* Título del formulario */}
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Registro</h2>
 
         <input
           type="text"
           placeholder="Nombre"
-          className="w-full mb-2 p-2 border"
+          className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-300"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -76,7 +78,7 @@ export default function RegisterPage() {
         <input
           type="email"
           placeholder="Email"
-          className="w-full mb-2 p-2 border"
+          className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-300"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -84,13 +86,13 @@ export default function RegisterPage() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full mb-2 p-2 border"
+          className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-300"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <select
-          className="w-full mb-2 p-2 border"
+          className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-300"
           value={role}
           onChange={(e) => setRole(e.target.value as "manager" | "user")}
         >
@@ -98,7 +100,7 @@ export default function RegisterPage() {
           <option value="manager">Gerente</option>
         </select>
 
-        <button className="w-full bg-green-500 text-white p-2 mt-2">
+        <button className="w-full bg-amber-400 hover:bg-amber-300 text-gray-900 p-2 mt-2 rounded transition-colors duration-200">
           Registrarse
         </button>
       </form>

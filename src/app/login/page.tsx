@@ -72,14 +72,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <form onSubmit={handleSubmit} className="p-6 border rounded w-80">
-        <h2 className="text-xl mb-4">Login</h2>
+    // Contenedor centralizado con fondo claro y texto oscuro para uniformidad de estilo
+    <div className="flex items-center justify-center h-screen bg-white text-gray-900">
+      <form onSubmit={handleSubmit} className="p-6 border border-gray-200 rounded-lg shadow-sm w-80 bg-white">
+        {/* Título del formulario */}
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Login</h2>
 
         <input
           type="email"
           placeholder="Email"
-          className="w-full mb-2 p-2 border"
+          className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -87,14 +89,14 @@ export default function LoginPage() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full mb-2 p-2 border"
+          className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <button className="w-full bg-blue-500 text-white p-2 mt-2">
+        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 mt-2 rounded transition-colors duration-200">
           Iniciar sesión
         </button>
       </form>
