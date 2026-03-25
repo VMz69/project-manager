@@ -17,7 +17,7 @@ import { useEffect, useState } from "react"
 import { useAuth } from "@/context/AuthContext"
 import TaskCard from "@/components/TaskCard"
 import ProtectedRoute from "@/components/ProtectedRoute"
-import { getTasks, createTask, updateTask, TaskStatus } from "@/services/taskService"
+import { getTasks, createTask, updateTask, deleteTask, TaskStatus } from "@/services/taskService"
 import { Task } from "@/types/Task"
 import { User } from "@/types/User"
 
@@ -60,6 +60,15 @@ export default function TasksPage() {
       setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)))
     } catch (err) {
       console.error("handleStatusChange falló:", err)
+    }
+  }
+
+  const handleTaskDeleted = async (id: number) => {
+    try {
+      await deleteTask(id)
+      setTasks((prev) => prev.filter((t) => t.id !== id))
+    } catch (err) {
+      console.error("handleTaskDeleted falló:", err)
     }
   }
 
@@ -238,6 +247,7 @@ export default function TasksPage() {
                 task={task}
                 currentUser={currentUser}
                 onStatusChange={handleStatusChange}
+                onTaskDeleted={handleTaskDeleted}
               />
             ))}
           </div>

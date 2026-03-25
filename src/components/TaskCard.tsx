@@ -20,6 +20,7 @@ interface TaskCardProps {
   task: Task
   currentUser: User | null
   onStatusChange: (id: number, newStatus: TaskStatus) => void
+  onTaskDeleted: (id: number) => Promise<void>
 }
 
 /** Mapa de cada estado al siguiente paso en el flujo de trabajo. */
@@ -55,11 +56,18 @@ const statusConfig: Record<TaskStatus, { label: string; border: string; badge: s
  * Muestra una tarjeta de tarea con una insignia de estado con código de color
  * y un botón según el rol para avanzar el estado un paso.
  */
-export default function TaskCard({ task, currentUser, onStatusChange }: TaskCardProps) {
+export default function TaskCard({ task, currentUser, onStatusChange, onTaskDeleted }: TaskCardProps) {
   const canChange = currentUser?.role === "manager" || (currentUser?.role === "user" && currentUser?.id === task.assignedTo)
+  const canDelete = currentUser?.role === "manager"
 
   const next = nextStatus[task.status]
   const config = statusConfig[task.status]
+
+  const handleDelete = async () => {
+    if (window.confirm(`¿Seguro que deseas eliminar la tarea "${task.title}"?`)) {
+      await onTaskDeleted(task.id)
+    }
+  }
 
   return (
     <div
@@ -98,22 +106,37 @@ export default function TaskCard({ task, currentUser, onStatusChange }: TaskCard
         </span>
       </div>
 
-      {/* Botón de avance de estado, solo si permitido */}
-      {canChange && next !== null ? (
-        <button
-          onClick={() => onStatusChange(task.id, next)}
-          className="
-            mt-auto w-full text-xs font-medium text-gray-600
-            border border-gray-300 hover:border-amber-400/50
-            hover:text-amber-600 hover:bg-amber-50
-            rounded-lg py-2 transition-all duration-200
-          "
-        >
-          Avanzar estado
-        </button>
-      ) : (
-        <div className="mt-auto" />
-      )}
+      {/* Botones de acciones — avance de estado y eliminar */}
+      <div className="mt-auto flex gap-2">
+        {canChange && next !== null ? (
+          <button
+            onClick={() => onStatusChange(task.id, next)}
+            className="
+              flex-1 text-xs font-medium text-gray-600
+              border border-gray-300 hover:border-amber-400/50
+              hover:text-amber-600 hover:bg-amber-50
+              rounded-lg py-2 transition-all duration-200
+            "
+          >
+            Avanzar estado
+          </button>
+        ) : (
+          <div className="flex-1" />
+        )}
+        {canDelete && (
+          <button
+            onClick={handleDelete}
+            className="
+              text-xs font-medium text-red-600
+              border border-red-300 hover:border-red-400/50
+              hover:bg-red-50
+              rounded-lg py-2 px-3 transition-all duration-200
+            "
+          >
+            Eliminar
+          </button>
+        )}
+      </div>
     </div>
   )
 }
