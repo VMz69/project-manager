@@ -42,6 +42,7 @@ export default function LoginPage() {
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   const { login, user } = useAuth();
@@ -83,6 +84,7 @@ export default function LoginPage() {
           placeholder="Email"
           className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
           value={email}
+          required={true}
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -91,6 +93,7 @@ export default function LoginPage() {
           placeholder="Password"
           className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
           value={password}
+          required={true}
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -99,6 +102,13 @@ export default function LoginPage() {
         <button className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 mt-2 rounded transition-colors duration-200">
           Iniciar sesión
         </button>
+
+        <p className="text-sm text-center text-gray-500 mt-4">
+          ¿No tienes cuenta?{" "}
+          <Link href="/register" className="text-blue-500 hover:underline">
+            Regístrate
+          </Link>
+        </p>
       </form>
     </div>
   );
