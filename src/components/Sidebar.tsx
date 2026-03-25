@@ -10,8 +10,9 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
   const { isOpen, toggle } = useSidebar();
 
-  // para que no salga la sidebar en las páginas login/register/home
-  if (pathname === '/login' || pathname === '/register' || pathname === '/') {
+  // para que no salga la sidebar en páginas que no sean dashboard, projects, tasks (incluyendo 404s)
+  const allowedPaths = ['/dashboard', '/projects', '/tasks'];
+  if (!allowedPaths.includes(pathname)) {
     return null;
   }
 
@@ -23,10 +24,10 @@ export default function Sidebar() {
          : 'hover:bg-blue-700'
      }`;
 
-  const handleLogout = () => {
-    logout();
-    router.push('/login');
-  };
+  // const handleLogout = () => {
+  //   logout();
+  //   router.push('/login');
+  // };
 
   return (
     <>

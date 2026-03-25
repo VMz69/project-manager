@@ -20,8 +20,9 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const { toggle } = useSidebar();
 
-  // No mostrar navbar en páginas públicas
-  if (pathname === '/login' || pathname === '/register' || pathname === '/') {
+  // para que no salga la sidebar en páginas que no sean dashboard, projects, tasks (incluyendo 404s)
+  const allowedPaths = ['/dashboard', '/projects', '/tasks'];
+  if (!allowedPaths.includes(pathname)) {
     return null;
   }
 
