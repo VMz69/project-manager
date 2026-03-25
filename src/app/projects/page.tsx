@@ -40,14 +40,18 @@ export default function ProjectsPage() {
   const isManager = user?.role === "manager";
 
   useEffect(() => {
-    setProjects(getProjects());
+    const loadProjects = async () => {
+      const projs = await getProjects();
+      setProjects(projs);
+    };
+    loadProjects();
   }, []);
 
-  const handleCreate = (e: React.FormEvent) => {
+  const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !description.trim() || !user?.id) return;
 
-    createProject({
+    await createProject({
       name,
       description,
       ownerId: user.id,
@@ -55,7 +59,8 @@ export default function ProjectsPage() {
 
     setName("");
     setDescription("");
-    setProjects(getProjects());
+    const updated = await getProjects();
+    setProjects(updated);
   };
 
   return (
@@ -114,7 +119,11 @@ export default function ProjectsPage() {
               <ProjectCard
                 key={p.id}
                 project={p}
-                onProjectDeleted={() => setProjects(getProjects())}
+                onProjectDeleted={async () => {
+                  const updated = await getProjects();
+                  setProjects(updated);
+                }}
+                isManager={isManager}
               />
             ))
           ) : (

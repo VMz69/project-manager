@@ -41,7 +41,7 @@ import { User } from "@/types/User";
 // Simula delay de API
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-// LOGIN
+// Simula fetch para POST /api/login
 export const login = async (email: string, password: string): Promise<User | null> => {
   await delay(300);
 
@@ -52,7 +52,7 @@ export const login = async (email: string, password: string): Promise<User | nul
   return user || null;
 };
 
-// REGISTER
+// Simula fetch para POST /api/register
 export const register = async (newUser: Omit<User, "id">): Promise<User> => {
   await delay(300);
 

@@ -34,14 +34,15 @@ import { deleteProject } from "../services/projectService";
 
 interface ProjectCardProps {
   project: Project;
-  onProjectDeleted: () => void;
+  onProjectDeleted: () => Promise<void>;
+  isManager: boolean;
 }
 
-export default function ProjectCard({ project, onProjectDeleted }: ProjectCardProps) {
-  const handleDelete = () => {
+export default function ProjectCard({ project, onProjectDeleted, isManager }: ProjectCardProps) {
+  const handleDelete = async () => {
     if (window.confirm(`¿Seguro que deseas eliminar "${project.name}"?`)) {
-      deleteProject(project.id);
-      onProjectDeleted();
+      await deleteProject(project.id);
+      await onProjectDeleted();
     }
   };
 
@@ -58,12 +59,14 @@ export default function ProjectCard({ project, onProjectDeleted }: ProjectCardPr
       </p>
       <div className="flex justify-between items-center pt-4 border-t border-slate-50">
         <span className="text-[10px] text-slate-400">Owner ID: {project.ownerId}</span>
-        <button 
-          onClick={handleDelete}
-          className="text-xs text-red-500 font-semibold hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors"
-        >
-          Eliminar
-        </button>
+        {isManager && (
+          <button 
+            onClick={handleDelete}
+            className="text-xs text-red-500 font-semibold hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors"
+          >
+            Eliminar
+          </button>
+        )}
       </div>
     </div>
   );
