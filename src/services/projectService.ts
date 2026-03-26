@@ -56,6 +56,23 @@ export const createProject = async (projectData: Omit<Project, 'id'>): Promise<P
   return newProject;
 };
 
+// Simula fetch para PATCH /api/projects/:id
+export const updateProject = async (id: number, projectData: Partial<Omit<Project, 'id'>>): Promise<Project> => {
+  await delay(300);
+  const index = projects.findIndex((p) => p.id === id);
+  if (index === -1) {
+    throw new Error(`Proyecto no encontrado: ${id}`);
+  }
+  
+  const updatedProject: Project = {
+    ...projects[index],
+    ...projectData
+  };
+  
+  projects[index] = updatedProject;
+  return updatedProject;
+};
+
 // Simula fetch para DELETE /api/projects/:id
 export const deleteProject = async (id: number): Promise<void> => {
   await delay(300);

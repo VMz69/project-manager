@@ -63,6 +63,12 @@ export default function ProjectsPage() {
     setProjects(updated);
   };
 
+  const handleProjectUpdated = async (updatedProject: Project) => {
+    setProjects((prev) =>
+      prev.map((p) => (p.id === updatedProject.id ? updatedProject : p))
+    );
+  };
+
   return (
     <ProtectedRoute>
       <div className="max-w-5xl mx-auto p-6">
@@ -124,6 +130,7 @@ export default function ProjectsPage() {
                   setProjects(updated);
                 }}
                 isManager={isManager}
+                onProjectUpdated={handleProjectUpdated}
               />
             ))
           ) : (
