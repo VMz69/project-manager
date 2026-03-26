@@ -34,7 +34,7 @@ simulados (mocks)** en lugar de una base de datos real.
 
 ``` bash
 git clone https://github.com/VMz69/project-manager.git
-cd project-manager
+cd project-manager.
 ```
 
 ## 2. Instalar dependencias
@@ -191,3 +191,4 @@ Enlace del proyecto desplegado:
 
 -   Este proyecto es de carácter **académico**.
 -   No utiliza base de datos real.
+-   Utiliza datos simulados (No utiliza API real).
