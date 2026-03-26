@@ -7,8 +7,8 @@
  * taskService.ts
  */
 
-/*
-CODIGO DE PRUEBA(APOYO)
+
+
 import { Task } from "../types/Task"
 
 export const tasks: Task[] = [
@@ -20,8 +20,3 @@ export const tasks: Task[] = [
     status: "pending"
   }
 ]
-*/
-
-import { Task } from "../types/Task"
-
-export const tasks: Task[] = []

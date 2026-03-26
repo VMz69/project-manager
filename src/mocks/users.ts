@@ -9,21 +9,22 @@
  * authService.ts
  */
 
-import { User } from "../types/User"
+import { User } from "@/types/User";
 
+// Base inicial de usuarios simulados
 export const users: User[] = [
   {
     id: 1,
     name: "Admin",
     email: "admin@test.com",
     password: "1234",
-    role: "manager"
+    role: "manager",
   },
   {
     id: 2,
     name: "User",
     email: "user@test.com",
     password: "1234",
-    role: "user"
-  }
-]
+    role: "user",
+  },
+];

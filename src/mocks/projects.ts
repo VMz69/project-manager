@@ -7,9 +7,6 @@
  * projectService.ts
  */
 
-
-/*
-CODIGO DE PRUEBA(APOYO)
 import { Project } from "../types/Project"
 
 export const projects: Project[] = [
@@ -20,9 +17,3 @@ export const projects: Project[] = [
     ownerId: 1
   }
 ]
-
-*/
-
-import { Project } from "../types/Project"
-
-export const projects: Project[] = []
