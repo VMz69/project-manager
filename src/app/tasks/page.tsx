@@ -18,7 +18,10 @@ import { useAuth } from "@/context/AuthContext"
 import TaskCard from "@/components/TaskCard"
 import ProtectedRoute from "@/components/ProtectedRoute"
 import { getTasks, createTask, updateTask, deleteTask, TaskStatus } from "@/services/taskService"
+import { getProjects } from "@/services/projectService"
+import { getUsers } from "@/services/authService"
 import { Task } from "@/types/Task"
+import { Project } from "@/types/Project"
 import { User } from "@/types/User"
 
 /**
@@ -32,6 +35,8 @@ export default function TasksPage() {
   const isManager = currentUser?.role === "manager"
 
   const [tasks, setTasks] = useState<Task[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
 
@@ -41,8 +46,8 @@ export default function TasksPage() {
   const [formAssignedTo, setFormAssignedTo] = useState("")
 
   useEffect(() => {
-    getTasks()
-      .then(setTasks)
+    Promise.all([getTasks(), getProjects(), getUsers()])
+      .then(([t, p, u]) => { setTasks(t); setProjects(p); setUsers(u) })
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [])
@@ -181,34 +186,38 @@ export default function TasksPage() {
                   transition-all duration-200
                 "
               />
-              <input
-                type="number"
-                placeholder="ID de proyecto *"
+              <select
                 value={formProjectId}
                 onChange={(e) => setFormProjectId(e.target.value)}
                 required
-                min={1}
                 className="
                   bg-white border border-gray-300 text-gray-900
-                  placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm
+                  rounded-lg px-3 py-2.5 text-sm
                   focus:outline-none focus:border-amber-400/60 focus:bg-gray-50
                   transition-all duration-200
                 "
-              />
-              <input
-                type="number"
-                placeholder="ID de usuario *"
+              >
+                <option value="" disabled>Proyecto *</option>
+                {projects.map((p) => (
+                  <option key={p.id} value={p.id}>{p.id} — {p.name}</option>
+                ))}
+              </select>
+              <select
                 value={formAssignedTo}
                 onChange={(e) => setFormAssignedTo(e.target.value)}
                 required
-                min={1}
                 className="
                   bg-white border border-gray-300 text-gray-900
-                  placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm
+                  rounded-lg px-3 py-2.5 text-sm
                   focus:outline-none focus:border-amber-400/60 focus:bg-gray-50
                   transition-all duration-200
                 "
-              />
+              >
+                <option value="" disabled>Usuario *</option>
+                {users.map((u) => (
+                  <option key={u.id} value={u.id}>{u.id} — {u.name}</option>
+                ))}
+              </select>
             </div>
             <button
               type="submit"

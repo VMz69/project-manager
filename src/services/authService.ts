@@ -41,6 +41,12 @@ import { User } from "@/types/User";
 // Simula delay de API (como si fuera el tiempo de respuesta de un fetch real)
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
+// Simula fetch para GET /api/users
+export const getUsers = async (): Promise<User[]> => {
+  await delay(300);
+  return [...users];
+};
+
 // Simula fetch para POST /api/login
 export const login = async (email: string, password: string): Promise<User | null> => {
   //  Simulación de latencia de red
