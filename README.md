@@ -182,8 +182,7 @@ Archivos:
 # Despliegue
 
 Enlace del proyecto desplegado:
-
-    (Pendiente)
+https://project-manager-three-xi.vercel.app/
 
 ------------------------------------------------------------------------
 
