@@ -30,6 +30,7 @@ export default function ProjectCard({ project }: any) {
 'use client';
 
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { Project } from "../types/Project";
 import { deleteProject, updateProject } from "../services/projectService";
 
@@ -46,7 +47,18 @@ export default function ProjectCard({ project, onProjectDeleted, isManager, onPr
   const [editDescription, setEditDescription] = useState(project.description);
 
   const handleDelete = async () => {
-    if (window.confirm(`¿Seguro que deseas eliminar "${project.name}"?`)) {
+    const result = await Swal.fire({
+      title: '¿Eliminar proyecto?',
+      text: `¿Seguro que deseas eliminar "${project.name}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
       await deleteProject(project.id);
       await onProjectDeleted();
     }
@@ -54,7 +66,12 @@ export default function ProjectCard({ project, onProjectDeleted, isManager, onPr
 
   const handleSaveEdit = async () => {
     if (!editName.trim() || !editDescription.trim()) {
-      alert('El nombre y descripción no pueden estar vacíos');
+      await Swal.fire({
+        title: 'Campo vacío',
+        text: 'El nombre y descripción no pueden estar vacíos',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
       return;
     }
 
@@ -67,7 +84,12 @@ export default function ProjectCard({ project, onProjectDeleted, isManager, onPr
       setIsEditing(false);
     } catch (err) {
       console.error("Error al actualizar proyecto:", err);
-      alert("Error al actualizar el proyecto");
+      await Swal.fire({
+        title: 'Error',
+        text: 'Error al actualizar el proyecto',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
     }
   };
 

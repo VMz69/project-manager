@@ -12,6 +12,7 @@
 
 "use client"
 
+import Swal from 'sweetalert2'
 import { Task } from "@/types/Task"
 import { User } from "@/types/User"
 import { TaskStatus } from "@/services/taskService"
@@ -64,7 +65,18 @@ export default function TaskCard({ task, currentUser, onStatusChange, onTaskDele
   const config = statusConfig[task.status]
 
   const handleDelete = async () => {
-    if (window.confirm(`¿Seguro que deseas eliminar la tarea "${task.title}"?`)) {
+    const result = await Swal.fire({
+      title: '¿Eliminar tarea?',
+      text: `¿Seguro que deseas eliminar la tarea "${task.title}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    })
+
+    if (result.isConfirmed) {
       await onTaskDeleted(task.id)
     }
   }
